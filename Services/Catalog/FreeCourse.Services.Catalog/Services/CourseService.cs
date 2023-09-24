@@ -27,7 +27,7 @@ namespace FreeCourse.Services.Catalog.Services
         {
             var courses = await _courseCollection.Find<Course>(c => true).ToListAsync();
 
-            if (!courses.Any())
+            if (courses.Any())
             {
                 foreach (var course in courses)
                 {
@@ -94,7 +94,7 @@ namespace FreeCourse.Services.Catalog.Services
         {
             var courses = await _courseCollection.Find<Course>(x=>x.UserId == userId).ToListAsync();
 
-            if (!courses.Any())
+            if (courses.Any())
             {
                 foreach (var course in courses)
                 {

@@ -8,7 +8,7 @@ namespace FreeCourse.Services.Catalog.Services
     {
         public Task<Response<List<CategoryDto>>> GetAllAsync();
 
-        public Task<Response<CategoryDto>> CreateAsync(Category category);
+        public Task<Response<CategoryDto>> CreateAsync(CategoryDto categoryDto);
 
         public Task<Response<CategoryDto>> GetByIdAsync(string id);
     }
