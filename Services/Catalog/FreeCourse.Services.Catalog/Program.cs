@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {
+    // Token alinacak service url
     opt.Authority = builder.Configuration["IdentityServerUrl"];
     opt.Audience = "resource_catalog";
     opt.RequireHttpsMetadata = false;
