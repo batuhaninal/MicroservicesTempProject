@@ -4,3 +4,4 @@ Services
 -- CatalogAPI => http://localhost:5011
 -- PhotoStockAPI => http://localhost:5012
 -- BasketAPI => http://localhost:5013
+-- DiscountAPI => http://localhost:5014

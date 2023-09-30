@@ -32,6 +32,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PhotoStock", "PhotoStock", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourse.Services.PhotoStock", "Services\PhotoStock\FreeCourse.Services.PhotoStock\FreeCourse.Services.PhotoStock.csproj", "{659C628F-DBD7-4274-993A-A4C1D64A837E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{619879B3-3C73-4779-A8FE-250324B6933B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeCourse.Services.Discount", "Services\Discount\FreeCourse.Services.Discount\FreeCourse.Services.Discount.csproj", "{81DEBACB-C0BC-417D-BE8E-3F30041E68EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +62,10 @@ Global
 		{659C628F-DBD7-4274-993A-A4C1D64A837E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{659C628F-DBD7-4274-993A-A4C1D64A837E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{659C628F-DBD7-4274-993A-A4C1D64A837E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81DEBACB-C0BC-417D-BE8E-3F30041E68EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81DEBACB-C0BC-417D-BE8E-3F30041E68EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81DEBACB-C0BC-417D-BE8E-3F30041E68EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81DEBACB-C0BC-417D-BE8E-3F30041E68EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,8 @@ Global
 		{EF6E9F8A-AAA7-4D1A-8E71-41EA6DE70EA7} = {29C1B073-75D8-4B65-91BB-EDAA9F19A813}
 		{3EEC66DE-F8E5-4595-B1AA-F863CB74D4BA} = {9BA5A427-9E3B-42EB-B8E9-19DB2A07A82D}
 		{659C628F-DBD7-4274-993A-A4C1D64A837E} = {3EEC66DE-F8E5-4595-B1AA-F863CB74D4BA}
+		{619879B3-3C73-4779-A8FE-250324B6933B} = {9BA5A427-9E3B-42EB-B8E9-19DB2A07A82D}
+		{81DEBACB-C0BC-417D-BE8E-3F30041E68EE} = {619879B3-3C73-4779-A8FE-250324B6933B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EBA5B32-25F9-488E-B278-E0DE43A5CD78}
