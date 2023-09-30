@@ -27,7 +27,7 @@ namespace FreeCourse.Services.Catalog.Controllers
 
         [HttpGet]
         [Route("/api/[controller]/GetAllByUserId/{userId}")]
-        public async Task<IActionResult> GetAllByUserId([FromRoute]string userId)
+        public async Task<IActionResult> GetAllByUserId([FromRoute] string userId)
         {
             var response = await _courseService.GetAllAsync();
 
@@ -35,7 +35,7 @@ namespace FreeCourse.Services.Catalog.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
             var response = await _courseService.GetByIdAsync(id);
             
@@ -59,7 +59,7 @@ namespace FreeCourse.Services.Catalog.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete([FromRoute] string id)
         {
             var response = await _courseService.DeleteAsync(id);
 
