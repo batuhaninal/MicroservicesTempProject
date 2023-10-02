@@ -1,4 +1,8 @@
 Services
+
+-- Gateway => http://localhost:5000
+
+
 -- IdentityServer => http://localhost:5001
 
 -- CatalogAPI => http://localhost:5011
@@ -7,3 +11,6 @@ Services
 -- DiscountAPI => http://localhost:5014
 -- OrderAPI => http://localhost:5015
 -- FakePaymentAPI => http://localhost:5016
+
+
+
