@@ -5,6 +5,9 @@ Services
 
 -- IdentityServer => http://localhost:5001
 
+-- Web MVC => http://localhost:5010
+
+
 -- CatalogAPI => http://localhost:5011
 -- PhotoStockAPI => http://localhost:5012
 -- BasketAPI => http://localhost:5013
