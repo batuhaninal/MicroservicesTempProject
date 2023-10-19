@@ -44,7 +44,7 @@ namespace FreeCourse.IdentityServer.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("getuser")]
         public async Task<IActionResult> GetUser()
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);

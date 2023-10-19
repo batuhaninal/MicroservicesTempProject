@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+@model UserViewModel
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="card-body">
+            <h5 class="card-title"></h5>
+            <table class="table table-striped-columns">
+                <tr>
+                    <td>Kullanici Adi</td>
+                    <td>@Model.UserName</td>
+                </tr>
+                <tr>
+                    <td>E-Posta</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td>Sehir</td>
+                    <td>@Model.City</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

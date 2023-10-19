@@ -24,6 +24,19 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @User.Identity.Name
+                                  </a>
+                                  <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Profil</a></li>
+                                    @* <li><a class="dropdown-item" href="#">Another action</a></li> *@
+                                    @* <li><hr class="dropdown-divider"></li> *@
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Logout">Cikis</a></li>
+                                  </ul>
+                                </li>
+                    </ul>
                 }
                 else
                 {

@@ -12,12 +12,12 @@
                 <form asp-controller="Auth" asp-action="SignIn" method="post"> 
                     <div class="mb-3">
                         <label asp-for="Email" class="form-label"></label>
-                        <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp">
+                        <input type="email" value="admin@admin.com" class="form-control" asp-for="Email" aria-describedby="emailHelp">
                         <span class="text-danger" asp-validation-for="Email"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Password" class="form-label"></label>
-                        <input type="password" asp-for="Password" class="form-control" id="exampleInputPassword1">
+                        <input type="password" asp-for="Password" value="Admin12*" class="form-control" id="exampleInputPassword1">
                         <span class="text-danger" asp-validation-for="Password"></span>
                     </div>
                     <div class="mb-3 form-check">

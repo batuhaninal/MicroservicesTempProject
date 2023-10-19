@@ -31,7 +31,7 @@ public class IdentityService : IIdentityService
     {
         var discovery = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest()
         {
-            Address = _apiSettings.BaseUri,
+            Address = _apiSettings.IdentityBaseUri,
             Policy = new DiscoveryPolicy() { RequireHttps = false }
         });
 
@@ -70,7 +70,7 @@ public class IdentityService : IIdentityService
         if (userInfo.IsError)
             throw userInfo.Exception;
 
-        var claimsIdentity = new ClaimsIdentity(userInfo.Claims, CookieAuthenticationDefaults.AuthenticationScheme, "email", "role");
+        var claimsIdentity = new ClaimsIdentity(userInfo.Claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
 
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
@@ -108,7 +108,7 @@ public class IdentityService : IIdentityService
     {
         var discovery = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest()
         {
-            Address = _apiSettings.BaseUri,
+            Address = _apiSettings.IdentityBaseUri,
             Policy = new DiscoveryPolicy() { RequireHttps = false }
         });
 
@@ -161,8 +161,28 @@ public class IdentityService : IIdentityService
         return token;
     }
 
-    public Task RevokeRefreshTokenAsync()
+    public async Task RevokeRefreshTokenAsync()
     {
-        throw new NotImplementedException();
+        var discovery = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest()
+        {
+            Address = _apiSettings.IdentityBaseUri,
+            Policy = new DiscoveryPolicy() { RequireHttps = false }
+        });
+
+        if (discovery.IsError)
+            throw discovery.Exception;
+
+        var refreshToken = await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+        var tokenRevocationRequest = new TokenRevocationRequest()
+        {
+            ClientId = _clientSettings.WebClientForUser.ClientId,
+            ClientSecret = _clientSettings.WebClientForUser.ClientSecret,
+            Address = discovery.RevocationEndpoint,
+            Token = refreshToken,
+            TokenTypeHint = "refresh_token"
+        };
+
+        await _httpClient.RevokeTokenAsync(tokenRevocationRequest);
     }
 }
