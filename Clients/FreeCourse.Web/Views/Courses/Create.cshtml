@@ -1,0 +1,43 @@
+﻿@{
+}
+@model CourseCreateInput
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Kurs Ekleme</h5>
+                <form asp-area="" asp-controller="Courses" asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label"></label>
+                        <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
+                            <option value="">Kategori Seciniz</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="CategoryId"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input class="form-control" type="text" asp-for="Name"/>
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label"></label>
+                        <input class="form-control" type="number" asp-for="Price"/>
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea class="form-control" type="number" asp-for="Description"></textarea>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Feature.Duration" class="form-label"></label>
+                        <input class="form-control" type="text" asp-for="Feature.Duration"/>
+                        <span class="text-danger" asp-validation-for="Feature.Duration"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

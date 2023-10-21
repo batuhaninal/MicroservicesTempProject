@@ -10,7 +10,7 @@
 
         public string UserId { get; set; }
 
-        public string Picture { get; set; }
+        public string? Picture { get; set; }
 
         public FeatureDto Feature { get; set; }
 

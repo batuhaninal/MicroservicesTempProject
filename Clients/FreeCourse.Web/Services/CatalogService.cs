@@ -25,7 +25,7 @@ public class CatalogService : ICatalogService
         return result.Data;
     }
 
-    public async Task<List<CategoryViewModel>> GetAllAsync()
+    public async Task<List<CategoryViewModel>> GetAllCategoriesAsync()
     {
         var response = await _httpClient.GetAsync("categories");
 

@@ -5,7 +5,7 @@ namespace FreeCourse.Web.Services.Abstracts;
 public interface ICatalogService
 {
     Task<List<CourseViewModel>> GetAllCourseAsync();
-    Task<List<CategoryViewModel>> GetAllAsync();
+    Task<List<CategoryViewModel>> GetAllCategoriesAsync();
     Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string userId);
     Task<CourseViewModel> GetByCourseId(string courseId);
     Task<bool> CreateCourseAsync(CourseCreateInput model);
