@@ -22,7 +22,7 @@ namespace FreeCourse.Services.PhotoStock.Controllers
                     await photo.CopyToAsync(stream, cancellationToken);
                 }
 
-                var returnPath = $"photos/{photo.FileName}";
+                var returnPath = photo.FileName;
 
                 return CreateActionResulInstance(Response<PhotoDto>.Success(new PhotoDto { Url = returnPath }, 200));
             }
