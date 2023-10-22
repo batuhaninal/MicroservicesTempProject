@@ -34,6 +34,7 @@
                     <img height="200px" src="@item.StockPictureUrl" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
+                        <span class="badge bg-primary">@item.Category.Name</span>
                         <p class="card-text">@item.ShortDescription</p>
                         <h4 class="text-primary">@item.Price $</h4>
                         <a asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id">Detay</a>

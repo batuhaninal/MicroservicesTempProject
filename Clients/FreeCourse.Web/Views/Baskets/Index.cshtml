@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Sepet";
+}
+@model BasketViewModel
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Sepet</h5>
+                @if (Model != null && Model.BasketItems.Any())
+                {
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Kurs Isim</th>
+                            <th>Kurs Fiyat</th>
+                            <th>Kurs Islemler</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.BasketItems)
+                        {
+                            <tr>
+                                <td>@item.CourseName</td>
+                                <td>@item.Price</td>
+                                <td>
+                                    <a class="btn btn-danger" asp-area="" asp-controller="Baskets" asp-action="RemoveBasketItem" asp-route-courseId="@item.CourseId">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                        <tfoot>
+                        @if (Model.HasDiscount)
+                        {
+                            <tr>
+                                <td>Indirim Orani</td>
+                                <td colspan="2">%@Model.DiscountRate.Value</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>@(Model.HasDiscount ? "Indirimli fiyat" : "Toplam fiyat")</td>
+                            <td colspan="2">@Model.TotalPrice</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-info">Sepetiniz boş</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

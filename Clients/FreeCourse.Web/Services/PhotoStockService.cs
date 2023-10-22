@@ -13,7 +13,7 @@ public class PhotoStockService : IPhotoStockService
         _httpClient = httpClient;
     }
 
-    public async Task<PhotoViewModel> UploadPhoto(IFormFile photo)
+    public async Task<PhotoViewModel> UploadPhotoAsync(IFormFile photo)
     {
         if (photo == null || photo.Length <= 0)
             return null;
@@ -36,7 +36,7 @@ public class PhotoStockService : IPhotoStockService
         return result.Data;
     }
 
-    public async Task<bool> DeletePhoto(string photoUrl)
+    public async Task<bool> DeletePhotoAsync(string photoUrl)
     {
         var response = await _httpClient.DeleteAsync($"photos?photoUrl={photoUrl}");
 

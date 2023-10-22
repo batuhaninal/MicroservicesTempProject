@@ -80,7 +80,7 @@ public class CatalogService : ICatalogService
 
     public async Task<bool> CreateCourseAsync(CourseCreateInput model)
     {
-        var resultPhoto = await _photoStockService.UploadPhoto(model.PhotoFormFile);
+        var resultPhoto = await _photoStockService.UploadPhotoAsync(model.PhotoFormFile);
 
         if (resultPhoto != null)
         {
@@ -96,11 +96,11 @@ public class CatalogService : ICatalogService
     {
         if (model.PhotoFormFile != null)
         {
-            var resultPhoto = await _photoStockService.UploadPhoto(model.PhotoFormFile);
+            var resultPhoto = await _photoStockService.UploadPhotoAsync(model.PhotoFormFile);
 
             if (resultPhoto != null)
             {
-                await _photoStockService.DeletePhoto(model.Picture);
+                await _photoStockService.DeletePhotoAsync(model.Picture);
                 model.Picture = resultPhoto.Url;
             }
         }
@@ -113,7 +113,7 @@ public class CatalogService : ICatalogService
     public async Task<bool> DeleteCourseAsync(string courseId, string pictureUrl)
     {
         if (!string.IsNullOrEmpty(pictureUrl))
-            await _photoStockService.DeletePhoto(pictureUrl);
+            await _photoStockService.DeletePhotoAsync(pictureUrl);
 
         var response = await _httpClient.DeleteAsync($"courses/{courseId}");
 
