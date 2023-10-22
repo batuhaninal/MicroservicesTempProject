@@ -19,4 +19,6 @@ public class CourseCreateInput
     [Display(Name = "Kurs Kategorisi")]
     [Required]
     public string CategoryId { get; set; }
+    [Display(Name = "Resim")]
+    public IFormFile? PhotoFormFile { get; set; }
 }

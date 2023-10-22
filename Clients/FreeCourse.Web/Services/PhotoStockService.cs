@@ -1,4 +1,5 @@
-﻿using FreeCourse.Web.Models;
+﻿using FreeCourse.Shared.Dtos;
+using FreeCourse.Web.Models;
 using FreeCourse.Web.Services.Abstracts;
 
 namespace FreeCourse.Web.Services;
@@ -31,7 +32,8 @@ public class PhotoStockService : IPhotoStockService
         if (!response.IsSuccessStatusCode)
             return null;
 
-        return await response.Content.ReadFromJsonAsync<PhotoViewModel>();
+        var result = await response.Content.ReadFromJsonAsync<Response<PhotoViewModel>>();
+        return result.Data;
     }
 
     public async Task<bool> DeletePhoto(string photoUrl)

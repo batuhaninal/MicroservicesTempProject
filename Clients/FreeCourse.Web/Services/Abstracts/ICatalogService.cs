@@ -10,5 +10,5 @@ public interface ICatalogService
     Task<CourseViewModel> GetByCourseId(string courseId);
     Task<bool> CreateCourseAsync(CourseCreateInput model);
     Task<bool> UpdateCourseAsync(CourseUpdateInput model);
-    Task<bool> DeleteCourseAsync(string courseId);
+    Task<bool> DeleteCourseAsync(string courseId, string pictureUrl);
 }

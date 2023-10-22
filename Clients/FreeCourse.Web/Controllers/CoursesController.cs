@@ -88,9 +88,9 @@ public class CoursesController : Controller
         return RedirectToAction(nameof(Index), "Courses");
     }
 
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(string id, string pictureUrl)
     {
-        await _catalogService.DeleteCourseAsync(id);
+        await _catalogService.DeleteCourseAsync(id, pictureUrl);
 
         return RedirectToAction(nameof(Index), "Courses");
     }
