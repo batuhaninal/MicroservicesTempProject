@@ -8,10 +8,12 @@ namespace FreeCourse.Web.Services;
 public class BasketService : IBasketService
 {
     private readonly HttpClient _httpClient;
+    private readonly IDiscountService _discountService;
 
-    public BasketService(HttpClient httpClient)
+    public BasketService(HttpClient httpClient, IDiscountService discountService)
     {
         _httpClient = httpClient;
+        _discountService = discountService;
     }
 
     public async Task<bool> SaveOrUpdateAsync(BasketViewModel basketViewModel)
@@ -48,11 +50,11 @@ public class BasketService : IBasketService
             {
                 basket.BasketItems.Add(basketItemViewModel);
             }
-            else
-            {
-                basket = new BasketViewModel();
-                basket.BasketItems.Add(basketItemViewModel);
-            }
+        }
+        else
+        {
+            basket = new BasketViewModel();
+            basket.BasketItems.Add(basketItemViewModel);
         }
 
         await SaveOrUpdateAsync(basket);
@@ -81,13 +83,34 @@ public class BasketService : IBasketService
         return await SaveOrUpdateAsync(basket);
     }
 
-    public Task<bool> ApplyDiscountAsync(string discountCode)
+    public async Task<bool> ApplyDiscountAsync(string discountCode)
     {
-        throw new NotImplementedException();
+        await CancelApplyDiscountAsync();
+
+        var basket = await GetAsync();
+
+        if (basket == null)
+            return false;
+        
+        var hasDiscount = await _discountService.GetDiscountAsync(discountCode);
+
+        if (hasDiscount == null)
+            return false;
+        
+        basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
+
+        return await SaveOrUpdateAsync(basket);
     }
 
-    public Task<bool> CancelApplyDiscountAsync()
+    public async Task<bool> CancelApplyDiscountAsync()
     {
-        throw new NotImplementedException();
+        var basket = await GetAsync();
+
+        if (basket == null || basket.DiscountCode == null)
+            return false;
+
+        basket.CancelAppliedDiscount();
+        
+        return await SaveOrUpdateAsync(basket);
     }
 }

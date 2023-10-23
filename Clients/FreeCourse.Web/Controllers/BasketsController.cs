@@ -45,4 +45,26 @@ public class BasketsController : Controller
         await _basketService.RemoveBasketItemAsync(courseId);
         return RedirectToAction(nameof(Index), "Baskets");
     }
+
+    public async Task<IActionResult> ApplyDiscount(DiscountApplyInput discountApplyInput)
+    {
+        if (!ModelState.IsValid)
+        {
+            TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).FirstOrDefault();
+            return RedirectToAction(nameof(Index), "Baskets");
+        }
+        
+        var discountStatus = await _basketService.ApplyDiscountAsync(discountApplyInput.Code);
+
+        TempData["discountStatus"] = discountStatus;
+
+        return RedirectToAction(nameof(Index), "Baskets");
+    }
+
+    public async Task<IActionResult> CancelAppliedDiscount()
+    {
+        await _basketService.CancelApplyDiscountAsync();
+
+        return RedirectToAction(nameof(Index), "Baskets");
+    }
 }

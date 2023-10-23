@@ -26,10 +26,22 @@ public class BasketViewModel
     
     public decimal TotalPrice => _basketItems.Sum(x => x.GetCurrentPrice * x.Quantity);
 
-    public bool HasDiscount => !string.IsNullOrEmpty(DiscountCode);
+    public bool HasDiscount => !string.IsNullOrEmpty(DiscountCode) && DiscountRate.HasValue;
 
     public BasketViewModel()
     {
         _basketItems = new List<BasketItemViewModel>();
+    }
+
+    public void CancelAppliedDiscount()
+    {
+        DiscountCode = null;
+        DiscountRate = null;
+    }
+
+    public void ApplyDiscount(string code, int rate)
+    {
+        DiscountCode = code;
+        DiscountRate = rate;
     }
 }

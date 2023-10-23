@@ -8,7 +8,7 @@ public class BasketItemViewModel
     public decimal Price { get; set; }
     private decimal? DiscountAppliedPrice { get; set; }
     
-    public decimal GetCurrentPrice => DiscountAppliedPrice ?? Price;
+    public decimal GetCurrentPrice => DiscountAppliedPrice != null ? DiscountAppliedPrice.Value : Price;
 
     public void AppliedDiscount(decimal discountPrice)
     {

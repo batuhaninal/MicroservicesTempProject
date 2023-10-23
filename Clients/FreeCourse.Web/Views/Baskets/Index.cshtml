@@ -22,7 +22,7 @@
                         {
                             <tr>
                                 <td>@item.CourseName</td>
-                                <td>@item.Price</td>
+                                <td>@item.GetCurrentPrice $ @(Model.HasDiscount ? $"%{Model.DiscountRate.Value} uygulandi" : "")</td>
                                 <td>
                                     <a class="btn btn-danger" asp-area="" asp-controller="Baskets" asp-action="RemoveBasketItem" asp-route-courseId="@item.CourseId">Sil</a>
                                 </td>
@@ -43,6 +43,27 @@
                         </tr>
                         </tfoot>
                     </table>
+                    <form asp-area="" asp-controller="Baskets" asp-action="ApplyDiscount" method="post">
+                        @if (Model.HasDiscount)
+                        {
+                            <div class="alert alert-success">
+                                "@Model.DiscountCode" indirim kodu uygulandi
+                                <a asp-area="" asp-controller="Baskets" asp-action="CancelAppliedDiscount" class="btn btn-outline-danger">Iptal Et</a>
+                            </div>
+                        }
+                        <div class="input-group mb-3">
+                            <input type="text" name="DiscountApplyInput.Code" class="form-control"/>
+                            <button class="btn btn-outline-secondary" type="submit">Uygula</button>
+                        </div>
+                        @if (TempData["discountStatus"] != null && !(bool)TempData["discountStatus"])
+                        {
+                            <div class="text-danger">Indirim kodu gecersiz!</div>
+                        }
+                        @if (TempData["discountError"] != null)
+                        {
+                            <div class="text-danger">@TempData["discountError"]</div>
+                        }
+                    </form>
                 }
                 else
                 {
