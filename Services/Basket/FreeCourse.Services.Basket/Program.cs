@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
+using FreeCourse.Services.Basket.Consumers;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,27 @@ builder.Services.AddSingleton<RedisService>(sp =>
 
     return redis;
 });
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CourseNameChangedEventConsumer>();
+    
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:Server"],"/", host =>
+        {
+            host.Username("guest");
+            host.Password("guest");
+        });
+        
+        cfg.ReceiveEndpoint("course-name-changed-event-basket-service", e =>
+        {
+            e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);
+        });
+    });
+}).AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+builder.Services.AddMassTransitHostedService();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -6,5 +6,12 @@
         public string CourseId { get; set; }
         public string CourseName { get; set; }
         public decimal Price { get; set; }
+
+        public void Update(string courseId, string courseName, decimal price)
+        {
+            CourseId = courseId;
+            CourseName = courseName;
+            Price = price;
+        }
     }
 }
