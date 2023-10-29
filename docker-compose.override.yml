@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  catalogdb:
+    container_name: catalogdb
+    restart: no
+    ports:
+      - "27017:27017"
+    volumes:
+      - catalogdb_volume:/data/db
+  basketdb:
+    container_name: basketdb
+    restart: no
+    ports:
+      - "6379:6379"
+  discountdb:
+    container_name: discountdb
+    restart: no
+    ports:
+      - "5432:5432"
+    volumes:
+      - discountdb_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=discountdb
+  identitydb:
+    container_name: identitydb
+    restart: no
+    ports:
+      - "1433:1433"
+    volumes:
+      - identitydb_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=fakePassw0r!
+  orderdb:
+    container_name: orderdb
+    restart: no
+    ports:
+      - "1444:1433"
+    volumes:
+      - orderdb_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=fakePassw0r!
+  rabbitmq:
+    container_name: rabbitmq
+    restart: no
+    ports:
+      - "5672:5672"
+      - "15672:15672"

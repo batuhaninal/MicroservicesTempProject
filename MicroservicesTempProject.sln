@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE135B43-E57A-458D-ADD8-B2DB8DD21BAC}"
 	ProjectSection(SolutionItems) = preProject
 		Ports.txt = Ports.txt
+		docker-compose.yml = docker-compose.yml
+		docker-compose.override.yml = docker-compose.override.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3B4B73E3-E739-45D4-9718-4D2F5525F35C}"
