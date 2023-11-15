@@ -33,12 +33,14 @@ services:
       - identitydb_volume:/var/opt/mssql
     environment:
       - "ACCEPT_EULA=Y"
-      - "MSSQL_SA_PASSWORD=fakePassw0r!"
+      - "MSSQL_SA_PASSWORD=fakePassw0rd!"
   orderdb:
     container_name: orderdb
     restart: always
     ports:
       - "1444:1433"
+    networks: 
+        - orderdb_network
     volumes:
       - orderdb_volume:/var/opt/mssql
     environment:
@@ -69,7 +71,7 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=IdentityDb; User=sa; Password=fakePassw0r!; TrustServerCertificate=True;"
+      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=IdentityDb; User=sa; Password=fakePassw0rd!; TrustServerCertificate=True;"
     ports:
       - "5001:80"
     depends_on:
@@ -97,7 +99,7 @@ services:
       - "5012:80"
     volumes:
       - type: bind
-        source: C:\Users\np_ba\Desktop\temp
+        source:  /Users/kadirbelkuyu/Desktop/temp
         target: /app/wwwroot/photos
   discount.api:
     container_name: discount.api
@@ -124,11 +126,13 @@ services:
   order.api:
     container_name: order.api
     restart: on-failure
+    networks: 
+        - orderdb_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identityserver.api
       - RabbitMQ:Server=rabbitmq
-      - "ConnectionStrings:DefaultConnection=Server=orderdb,1433; Database=OrderDb; User=sa; Password=fakePassw0r!; TrustServerCertificate=True;"
+      - "ConnectionStrings:DefaultConnection=Server=orderdb,1433; Database=OrderDb; User=sa; Password=fakePassw0rd!; TrustServerCertificate=True;"
     ports:
       - "5015:80"
     depends_on:
@@ -160,3 +164,7 @@ services:
       - order.api
       - photostock.api
       - fakepayment.api
+
+networks:
+    orderdb_network:
+        driver: bridge
