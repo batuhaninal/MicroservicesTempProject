@@ -3,19 +3,19 @@ version: "3.8"
 services:
   catalogdb:
     container_name: catalogdb
-    restart: no
+    restart: always
     ports:
       - "27017:27017"
     volumes:
       - catalogdb_volume:/data/db
   basketdb:
     container_name: basketdb
-    restart: no
+    restart: always
     ports:
       - "6379:6379"
   discountdb:
     container_name: discountdb
-    restart: no
+    restart: always
     ports:
       - "5432:5432"
     volumes:
@@ -26,30 +26,30 @@ services:
       - POSTGRES_DB=discountdb
   identitydb:
     container_name: identitydb
-    restart: no
+    restart: always
     ports:
       - "1433:1433"
     volumes:
       - identitydb_volume:/var/opt/mssql
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=fakePassw0r!
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=fakePassw0r!"
   orderdb:
     container_name: orderdb
-    restart: no
+    restart: always
     ports:
       - "1444:1433"
     volumes:
       - orderdb_volume:/var/opt/mssql
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=fakePassw0r!
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=fakePassw0rd!"
   rabbitmq:
     container_name: rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
-    restart: no
+    restart: on-failure
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -58,7 +58,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQ:Server=rabbitmq
-      - IdentityServerURL=http://identityserver.api:5001
+      - IdentityServerURL=http://identityserver.api
       - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
     ports:
       - "5011:80"
@@ -69,17 +69,18 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=IdentityDb; User=sa; Password=fakePassw0r!"
+      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=IdentityDb; User=sa; Password=fakePassw0r!; TrustServerCertificate=True;"
     ports:
       - "5001:80"
     depends_on:
       - identitydb
   basket.api:
     container_name: basket.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQ:Server=rabbitmq
-      - IdentityServerURL=http://identityserver.api:5001
+      - IdentityServerURL=http://identityserver.api
       - RedisSettings:Port=6379
       - RedisSettings:Host=basketdb
     ports:
@@ -88,9 +89,10 @@ services:
       - basketdb
   photostock.api:
     container_name: photostock.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=http://identityserver.api:5001
+      - IdentityServerURL=http://identityserver.api
     ports:
       - "5012:80"
     volumes:
@@ -99,9 +101,10 @@ services:
         target: /app/wwwroot/photos
   discount.api:
     container_name: discount.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=http://identityserver.api:5001
+      - IdentityServerURL=http://identityserver.api
       - "ConnectionStrings:PostgreSql=User ID=postgres;Password=mysecretpassword;Server=discountdb;Port=5432;Database=discountdb;Integrated Security=true;Pooling=true;"
     ports:
       - "5014:80"
@@ -109,11 +112,51 @@ services:
       - discountdb
   fakepayment.api:
     container_name: fakepayment.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=http://identityserver.api:5001
+      - IdentityServerURL=http://identityserver.api
       - RabbitMQ:Server=rabbitmq
     ports:
       - "5016:80"
     depends_on: 
       - rabbitmq
+  order.api:
+    container_name: order.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IdentityServerURL=http://identityserver.api
+      - RabbitMQ:Server=rabbitmq
+      - "ConnectionStrings:DefaultConnection=Server=orderdb,1433; Database=OrderDb; User=sa; Password=fakePassw0r!; TrustServerCertificate=True;"
+    ports:
+      - "5015:80"
+    depends_on:
+      - orderdb
+      - rabbitmq
+  gateway.api:
+    container_name: gateway.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - IdentityServerURL=http://identityserver.api
+    ports:
+      - "5000:80"
+  aspnetcoremvc.web:
+    container_name: aspnetcoremvc.web
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ServiceApiSettings:GatewayBaseUri=http://gateway.api
+      - ServiceApiSettings:IdentityBaseUri=http://identityserver.api
+    ports:
+      - "5010:80"
+    depends_on:
+      - gateway.api
+      - identityserver.api
+      - catalog.api
+      - basket.api
+      - discount.api
+      - order.api
+      - photostock.api
+      - fakepayment.api
