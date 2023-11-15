@@ -39,8 +39,6 @@ services:
     restart: always
     ports:
       - "1444:1433"
-    networks: 
-        - orderdb_network
     volumes:
       - orderdb_volume:/var/opt/mssql
     environment:
@@ -126,8 +124,6 @@ services:
   order.api:
     container_name: order.api
     restart: on-failure
-    networks: 
-        - orderdb_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identityserver.api
@@ -164,7 +160,3 @@ services:
       - order.api
       - photostock.api
       - fakepayment.api
-
-networks:
-    orderdb_network:
-        driver: bridge
